@@ -1,0 +1,30 @@
+[package]
+name = "dreadnought"
+version = "0.1.0"
+authors = ["Francisco Carvajal <fraco_oxza@outlook.com>"]
+edition = "2018"
+description = "A lightweight, simple and configurable web server"
+repository = "https://github.com/fraco-oxza/dreadnought"
+license = "MIT"
+license-file = "LICENSE.txt"
+keywords = ["server", "lightweight", "http"]
+
+[[bin]]
+name = "dng"
+path = "src/main.rs"
+
+[profile.release]
+lto = true
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = "2.33.3"
+human-panic = "1.0.3"
+lazy_static = "1.4.0"
+ansi_term = "0.12.1"
+pretty_env_logger = "0.4.0"
+log = "0.4.14"
+
+
