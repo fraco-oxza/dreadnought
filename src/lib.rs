@@ -1,12 +1,12 @@
 use std::collections::HashMap;
 use std::fmt;
-use std::io::{Read, Write};
+use std::io::{self, Read, Write};
 use std::net::TcpStream;
 use std::process::exit;
 
 use ansi_term::{Colour, Style};
 use lazy_static::lazy_static;
-use log::{debug, error, info, trace, warn};
+use log::{debug, error, info};
 
 pub mod cli;
 pub mod pool;
@@ -14,6 +14,7 @@ pub mod watch;
 
 lazy_static! {
     pub static ref ERROR_STYLE: Style = Style::new().fg(Colour::Red).bold();
+    pub static ref REMARK_STYLE: Style = Style::new().fg(Colour::Cyan).bold();
 }
 
 pub fn close_with_error<T>(e: T, code: i32)
@@ -119,17 +120,25 @@ impl HttpPetition {
         self.stream.write(content)?;
         Ok(())
     }
+    pub fn get_peer_addr(&self) -> io::Result<std::net::SocketAddr> {
+        self.stream.peer_addr()
+    }
 }
 
 impl fmt::Display for HttpPetition {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "{:#?} {} {}",
+            "  {:#?} {} {}",
             self.method, self.endpoint, self.http_version
         )?;
         for key in self.header.keys() {
-            write!(f, "\n{}: {}", key, self.header.get(key).unwrap())?;
+            write!(
+                f,
+                "\n    {} {}",
+                REMARK_STYLE.paint(format!("{}:", key)),
+                self.header.get(key).unwrap()
+            )?;
         }
         Ok(())
     }

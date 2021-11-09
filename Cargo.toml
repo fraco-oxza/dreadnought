@@ -1,12 +1,11 @@
 [package]
 name = "dreadnought"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Francisco Carvajal <fraco_oxza@outlook.com>"]
 edition = "2018"
 description = "A lightweight, simple and configurable web server"
 repository = "https://github.com/fraco-oxza/dreadnought"
 license = "MIT"
-license-file = "LICENSE.txt"
 keywords = ["server", "lightweight", "http"]
 
 [[bin]]
